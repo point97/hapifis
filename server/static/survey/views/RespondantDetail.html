@@ -1,0 +1,81 @@
+<div class="container">
+    <div ng-include="viewPath + 'views/sideNav.html'"></div>
+    <div class="col-md-10">
+        <div class="col-md-6">
+        </div>
+        <div class="col-md-6">
+            <div id="review_buttons">
+                <button ng-show="!!review_previous_uuid" ng-click="goToPrevious()" class="btn btn-default" type="button">&laquo; Previous</button>
+                <!-- <a ng-show="filtered_list_url" href="{{filtered_list_url}}" class="btn btn-default">Overview</a> -->
+                <!-- Look at this madness, fake that ternary operator. Thanks, StackOverflow! -->
+                <button ng-show="!!review_next_uuid" ng-click="goToNext()" class="btn btn-default" type="button">Next &raquo;</button>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-2"></div>
+    <div class="col-md-10">
+        <h3>Respondent Details</h3>
+        <div class="col-md-8">
+            <dl class="dl-horizontal">
+                <dt>surveyor</dt>
+                <dd>{{ respondent.user.username }}</dd>
+                <dt>identity</dt>
+                <dd>{{ respondent.email || respondent.uuid}}</dd>
+                <dt>timestamp</dt>
+                <dd>{{ respondent.ts  |validDate: 'dd-MM-yyyy HH:mm' }}</dd>
+            </dl>
+        </div>
+        <div id="market_status_filters" class="col-md-4">
+            <h3>Status: {{last_status[1]}}</h3>
+            <h4>Set status:</h4>
+            <select class="form-control" ng-model="current_status" ng-options="i as i[1] for i in statuses">
+            </select>
+            <textarea ng-model="review_comment" placeholder="Type any comments here" class="form-control"></textarea>
+            <div class="save_delete">
+                <button ng-click="updateStatus()" class="btn btn-default" type="button">Save</button>
+                <button ng-show="!confirmDelete && user.is_superuser" class="btn btn-danger" ng-click="confirmDelete = true">Delete</button>
+                <div ng-show="confirmDelete && user.is_superuser" class="btn-group">
+                    <a class="btn btn-default btn-danger" ng-click="delete_respondent()">Delete</a>
+                    <a class="btn btn-default" ng-click="confirmDelete = false">Cancel</a>
+                </div>
+                <p ng-show="saved" ><i class="icon-ok-sign"></i> Saved!</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-2"></div>
+    <div class="col-md-10">
+        <h3>Responses</h3>
+        <table class="table-striped table">
+            <tbody>
+                <tr ng-repeat="response in respondent.responses">
+                    <td>{{response.question.label}}:</td>
+                    <td>
+                        <span ng-switch on="response.question.type">
+                            <span ng-switch-default>{{response.answer}}</span>
+                            <span ng-switch-when="yes-no">{{response.answer_parsed.text}}</span>
+                            <ul class="unstyled" ng-switch-when="multi-select">
+                                <li ng-repeat="answer in response.answer_parsed">{{answer.text}}</li>
+                            </ul>
+                            <table class="table table-bordered" ng-switch-when="grid">
+                                <thead>
+                                    <th></th>
+                                    <th ng-repeat="grid_col in response.question.grid_cols"><strong>{{grid_col.text}}</strong></th>
+                                </thead>
+                                <tbody>
+                                    <tr ng-repeat="answer in response.answer_parsed">
+                                        <td>{{ answer.text }}</td>
+                                        <td ng-repeat="grid_col in response.question.grid_cols" ng-hide="grid_col.type=='multi-select'">{{answer[grid_col.label.replace('-', '')]}}</td>
+                                        <td ng-repeat="grid_col in response.question.grid_cols" ng-show="grid_col.type=='multi-select'">
+                                            <span ng-repeat="multiAnswer in answer[grid_col.label.replace('-', '')]">{{multiAnswer}}<span ng-hide="$last">,</span> </span>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </span>
+                    </td>
+                    <td><a target="_blank" href="/respond#/survey/{{surveySlug}}/{{response.question.slug}}/{{ uuid }}/edit" class="btn">edit</a>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

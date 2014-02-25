@@ -1,0 +1,21 @@
+<div class="container">
+    <header class="bar-title" titlebar></header>
+    <mobilemenu user="user"></mobilemenu>
+    <div class="content question-page">
+      <div class="content-padded">
+        <div class="respondant" ng-class="{mapRespondant: question.type == 'map-multipoint'}">
+            <i ng-show="loading" style="margin: 0 auto;" class="icon-spinner icon-spin"></i>
+            <div ng-hide="question.type == 'map-multipoint'" class="row row-progress-bar" style="height:12px !important;">
+                <div class="offset9 col-md-3" style="height:12px !important; line-height: 5px;">
+                    <div ng-hide="showProgressBar" class="progress">
+                      <div class="progress-bar" style="width: {{ ((survey.questions.indexOf(question) + 1) / survey.questions.length) * 100 }}%;"></div>
+                    </div>
+                </div>
+            </div>
+            <h2 class="question-title" ng-bind-html-unsafe="question.displayTitle" ng-hide="question.type == 'info' || question.type == 'map-multipoint'" >
+
+            </h2>
+            <div ng-include="viewPath + 'views/questionTypes.html'"></div>
+        </div>
+    </div>
+</div>

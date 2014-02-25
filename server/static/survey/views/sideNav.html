@@ -1,0 +1,34 @@
+<div class="col-md-2 cold-sm-2 print-hide" id="sidenav_respondants">
+    <div class="stats">
+        <div class="row">
+            <div id="side_total" class="col-sm-12 col-md-12">
+                <h1>{{survey.survey_responses || 0}}</h1>
+                <p>TOTAL RESPONDENTS</p>
+            </div>
+        </div>
+        <div class="row">
+            <div id="side_reviews_needed" class="col-sm-6 col-md-6">
+                <h1>{{survey.reviews_needed || 0}}</h1>
+                <p>NEED REVIEW</p>
+            </div>
+            <div id="side_flagged" class="col-sm-6 col-md-6">
+                <h1>{{survey.flagged || 0}}</h1>
+                <p>FLAGGED</p>
+            </div>
+        </div>
+    </div>
+    <div id="respondant_stats">
+        <div class="row">
+            <div class="col-md-12 col-sm-12">
+                <ul class="nav">
+                    <li><a ng-class="{'active': activePage == 'overview'}" href="#/RespondantList/{{survey.slug}}">OVERVIEW</a></li>
+                    <li><a ng-class="{'active': activePage == 'survey-stats'}" href="#/RespondantList/{{survey.slug}}/survey-stats">SURVEY STATS</a></li>
+                    <li><a ng-class="{'active': activePage == 'economic'}" href="#/survey/{{survey.slug}}/reports/economic">ECONOMIC REPORT</a></li>
+                    <li><a ng-class="{'active': activePage == 'biological'}" href="#/survey/{{survey.slug}}/reports/biological">BIOLOGICAL REPORT</a></li>
+                    <li><a ng-class="{'active': activePage == 'market-report'}" href="#/RespondantList/{{survey.slug}}/market-report">MARKET REPORT</a></li>
+                    <li><a href="/reports/full-survey-data/{{survey.slug}}">DOWNLOAD</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>

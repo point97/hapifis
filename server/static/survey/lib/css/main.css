@@ -1,0 +1,171 @@
+.save_delete {
+    margin-top: 0.5em;
+}
+.save_delete p {
+    display: inline;
+}
+.download_cog {
+    position: absolute;
+    z-index: 10;
+    right: 2em;
+    top: -2em;
+}
+.date-range-picker {
+    margin-top: 20px;
+    font-size: 16px;
+    text-align: center;
+    color: rgb(100,100,100) !important;
+}
+#total_market_weight {
+    margin-bottom: 1em;
+}
+#print_button {
+    margin-top: 2em;
+    float: right;
+    display: inline-block;
+}
+#filter_row {
+    margin-top: 2em;
+}
+#responses_found {
+    background-color: #ddd;
+}
+#responses_found p {
+    font-size: 10px;
+}
+
+#global-navbar {
+    margin-bottom: 0;
+}
+#global-navbar .container {
+    border-bottom: solid 5px #2f3577;
+    padding-left: 0;
+}
+#global-navbar img {
+    min-height: 50px;
+}
+#global-navbar h1 {
+    display: inline;
+    margin-left: 1em;
+}
+#global-navbar .btn {
+    margin-right: 1em;
+}
+.main-container {
+    padding-left: 0;
+    padding-right: 10px;
+}
+.respondent-table .highlightable_row:hover {
+    background-color: #68A1D6;
+    color: #FFF;
+    cursor: pointer;
+}
+#survey-landing-table td {
+    vertical-align: middle;
+}
+#survey-landing-table .survey-num, #survey-landing-table p {
+    text-align: center;
+    margin: auto;
+}
+#survey-landing-table .icon-plus,
+#survey-landing-table .icon-mobile-phone,
+#survey-landing-table .icon-trash,
+#survey-landing-table .icon-edit {
+    font-size: 24px;
+}
+
+.center-text {
+    text-align: center;
+}
+
+.ui-rangeSlider-label {
+    font-size: 12px;
+    padding: 2px 3px;
+    bottom: 10px;
+}
+.ui-rangeSlider input {
+    width: 6em;
+    padding-left: 5px;
+    padding-right: 5px;
+}
+#surveyor_by_time_chart, #surveyor_total_chart {
+    margin-top: 20px;
+    margin-bottom: 3em;
+}
+#sidenav_respondants a.active {
+    background-color: #68A1D6;
+    color: #FFF;
+}
+#sidenav_respondants {
+    padding: inherit;
+}
+#sidenav_respondants .stats {
+    text-align: center;
+}
+#sidenav_respondants #respondant_stats {
+    border-top: solid 5px #2f3577;
+    border-bottom: solid 5px #2f3577;
+    padding: 5px 0;
+}
+#side_total, #side_flagged, #side_reviews_needed{
+    color: #FFF;
+    padding-left: 0px;
+    padding-right: 0px;
+}
+#side_total p, #side_flagged p, #side_reviews_needed p {
+    font-size: 10px;
+}
+#side_total {
+    background-color: #68A1D6;
+    margin-left: 6.5%;
+    width: 87%;
+    padding-bottom: 10px;
+    padding-top: 15px;
+}
+#side_total h1 {
+    margin-top: 0px;
+    margin-bottom: 0px;
+}
+#side_flagged {
+    width: 43.5%;
+    background-color: #ED7369;
+}
+#side_reviews_needed {
+    background-color: #F6C43F;
+    margin-left: 6.5%;
+    width: 43.5%;
+}
+
+#market_status_filters select {
+    margin-top: 20px;
+    margin-bottom: 10px;
+}
+
+#respondant_list_survey_buttons {
+    margin-bottom: 2em;
+}
+#respondant_list_survey_buttons div {
+    display: inline-block;
+    margin-left: 2em;
+}
+
+th.sortable_table {
+    cursor: pointer;
+}
+
+input.datepicker {
+    color: black;
+}
+#review_buttons {
+    margin-top: 2em;
+    display: inline-block;
+    float: right;
+}
+.print-show {
+    display: none;
+}
+.view-container > .container {
+    /*margin-left: 0;*/
+    padding-left: 0;
+    padding-right: 0;
+}

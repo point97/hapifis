@@ -1,0 +1,149 @@
+<div class="container main-container">
+    <div ng-include="viewPath + 'views/sideNav.html'"></div>
+    <div class="col-md-10">
+        <div class="col-md-6">
+        </div>
+    </div>
+    <div class="col-md-10 print-show">
+        <div class="col-md-10">
+        <h2>
+            {{ filter.startDate|validDate: 'dd-MM-yyyy'  }} to {{ filter.endDate|validDate: 'dd-MM-yyyy' }}
+        </h2>
+        </div>
+    </div>
+    <div class="col-md-10 print-hide">
+        <div class="col-md-10">
+            <h2>
+                Overview
+            </h2>
+        </div>
+        <div class="print-hide col-md-2">
+            <button print-button></button>
+        </div>
+    </div>
+    <div id="filter_row" class="col-md-10 print-hide">
+        <div id="responses_found" class="center-text col-md-2">
+            <h2>{{meta.total_count}}</h2>
+            <P >RESPONSES FOUND</P>
+        </div>
+        <div class="col-md-4 col-md-offset-4">
+            <div class="form-control date-range-picker" date-range-picker min="filter.min" max="filter.max" start="filter.startDate" end="filter.endDate"></div>
+            <!-- <div style="display: none" min="filter.min" max="filter.max" start="filter.startDate" end="filter.endDate" editable-date-range-slider></div> -->
+        </div>
+        <div id="market_status_filters" class="col-md-2">
+            <select class="form-control" ng-model="market" ng-options="m for m in markets">
+                <option value="">All Markets</option>
+            </select>
+            <select class="form-control" ng-model="status_single" ng-options="i[0] as i[1] for i in statuses">
+                <option value="">All Statuses</option>
+            </select>
+        </div>
+    </div>
+    <div class="col-md-2"></div>
+    <div class="col-md-10">
+        <p ng-show="message">{{message}}</p>
+        <div>
+            <h2>Total Surveys Collected by Date</h2>
+            <div class="btn-group print-hide">
+                <button ng-class="{'active': surveyorTimeFilter == 'hour'}"
+                    type="button"
+                    class="btn btn-default"
+                    ng-click="surveyorTimeFilter='hour'">Hourly</button>
+                <button ng-class="{'active': surveyorTimeFilter == 'day'}"
+                    type="button"
+                    class="btn btn-default"
+                    ng-click="surveyorTimeFilter='day'">Day</button>
+                <button ng-class="{'active': surveyorTimeFilter == 'week'}"
+                    type="button"
+                    class="btn btn-default"
+                    ng-click="surveyorTimeFilter='week'">Week</button>
+                <button ng-class="{'active': surveyorTimeFilter == 'month'}"
+                    type="button"
+                    class="btn btn-default"
+                    ng-click="surveyorTimeFilter='month'">Month</button>
+            </div>
+            <i ng-show="respondentsLoading" class="icon-spinner icon-spin"></i>
+            <div id="total_surveys_chart">
+                <div time-series chart="total_surveys"></div>
+            </div>
+            <!-- <div id="surveyor_total_chart">
+                <div bar-chart chart="surveyor_total"></div>
+            </div>
+            <div id="surveyor_by_time_chart">
+                <div time-series chart="surveyor_by_time"></div>
+            </div> -->
+        </div>
+        <div class="respondent-table print-hide">
+        <h2>Survey Responses</h2>
+            <table class="table" ng-class="{ 'loading': respondentsLoading }">
+                <tbody>
+                    <tr>
+                        <th class="sortable_table" ng-repeat="column in columns" ng-click="changeSorting(column)">{{column.name}}
+                            <i ng-show="currentColumn == column && sortDescending" class="icon-caret-down"></i>
+                            <i ng-show="currentColumn == column && !sortDescending" class="icon-caret-up"></i>
+                        </th>
+                    </tr>
+                    <tr ng-click="goToResponse(respondent)" class="highlightable_row" ng-repeat="respondent in respondents">
+                        <td>{{ respondent.user.username }}</td>
+                        <td>{{ respondent.ts|validDate: 'dd-MM-yyyy' }}</td>
+                        <td>{{ respondent.ts|validDate: 'HH:mm' }}</td>
+                        <td>{{ respondent.survey_site }}</td>
+                        <td>{{ respondent.vendor }}</td>
+                        <td>{{ respondent.buy_or_catch }}</td>
+                        <td>{{ respondent.how_sold }}</td>
+                        <td>
+                            <span class="label" ng-class="{ 'label-success': respondent.review_status == 'accepted', 'label-danger': respondent.review_status == 'flagged', 'label-warning': respondent.review_status == 'needs review' }">
+                                {{ respondent.review_status }}
+                            </span>
+                        </td>
+                        <!-- <td><a href="#/RespondantDetail/{{survey.slug}}/{{ respondent.uuid }}?{{filtered_list_url}}">Responses ({{respondent.responses.length}})</a></td> -->
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div id="respondant_list_survey_buttons" class="pull-right print-hide">
+            <span ng-hide="respondentsLoading">
+                Records {{meta.offset}} to 
+                <span ng-show="(meta.offset+meta.limit) <= meta.total_count">{{meta.offset+meta.limit}}</span>
+                <span ng-hide="(meta.offset+meta.limit) <= meta.total_count">{{meta.total_count}}</span> of {{ meta.total_count }}
+            </span>
+            <div class="btn-group">
+                <button class="btn" ng-disabled="! meta.previous" ng-click="getRespondents(meta.previous)">Previous</button>
+                <button class="btn" ng-disabled="! meta.next" ng-click="getRespondents(meta.next)">Next</button>
+            </div>
+            <!-- <div>
+                <a href="#/search" class="btn"><i class="icon-search"></i> Search</a>
+            </div> -->
+        </div>
+        <!-- <div class="row">
+            <div heatmap question="question.slug"></div>
+        </div> -->
+
+        <!--
+        <div class="row" ng-repeat="question in survey.questions">
+            <div  ui-if="question.visualize">
+                <div class="clearfix">
+                    <div ng-repeat="filterQuestion in question.filterQuestions">
+                        <select class="pull-right" placeholder="filter by {{ filterQuestion.slug }}" multiple=true ng-model="question.filters[filterQuestion.slug]" ui-select2 ng-hide="filterQuestion.slug == question.slug" style="width: 200px">
+                            <option value="{{answer.answer}}" ng-repeat="answer in filterQuestion.answer_domain">
+                                <strong>{{answer.answer}}</strong>
+                            </option>
+                        </select>
+                    </div>
+                    <dl ng-repeat="(slug, filter) in question.filters">
+                        <dt>{{ slug }}:</dt>
+                        <dd ng-show="filter.length" ng-repeat="filterItem in filter">{{filterItem}}</dd>
+                        <dd ng-hide="filter.length">all</dd>
+                    </dl>
+                </div>
+                <div ui-if="question.report_type == 'heatmap' || question.report_type == 'heatmap-distribution'">
+                    <div heatmap question="question" filteritems="question.filters" class="heatmap"></div>
+                </div>
+                <div ui-if="question.report_type == 'distribution' || question.report_type == 'heatmap-distribution'">
+                    <distribution filter="question.filters" question="question" survey-slug="survey.slug"></distribution>
+                </div>
+            </div>
+        </div>
+        -->
+    </div>
+</div>
