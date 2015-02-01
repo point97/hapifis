@@ -25,6 +25,15 @@ easy_install pip #(if you do not already have)
 pip install fabric #(if you do not already have)
 fab vagrant bootstrap
 fab vagrant createsuperuser
+```
+## Client-side dependencies
+Install npm #(if you do not already have)
+npm install -g bower
+cd to root directory containing .bowerrc and component.json files
+bower install
+
+## Run dev server
+```
 fab vagrant runserver
 ```
 
@@ -39,8 +48,6 @@ From the currently running instance
 fab staging:eknuth@hapifis-dev.pointnineseven.com backup_db
 fab vagrant restore_db:backups/2013-11-261230-geosurvey.dump
 fab staging:eknuth@hapifis-dev.pointnineseven.com migrate_db
-
-
 
 ## Provision a fresh Server with Chef and Fabric
 Create a node file with the name scripts/cookbook/node_staging.json from the template in scripts/cookbook/node_staging.json.template.  Set the postgresql password and add your ssh public key to scripts/node_staging.json.  Tested with Ubuntu 12.04 (precise pangolin).
