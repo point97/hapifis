@@ -27,7 +27,7 @@ fab vagrant bootstrap
 fab vagrant createsuperuser
 ```
 ## Client-side dependencies
-Install npm #(if you do not already have)
+Install npm
 ```bash
 npm install -g bower
 cd to root directory containing .bowerrc and component.json files
